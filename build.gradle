@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+    id "net.serenity-bdd.serenity-gradle-plugin" version "3.0.2"
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    slf4jVersion = '1.7.7'
+    serenityCoreVersion = '3.7.1'
+    junitVersion = '5.10.0-M1'
+    assertJVersion = '3.24.2'
+}
+
+dependencies {
+    testImplementation "net.serenity-bdd:serenity-core:${serenityCoreVersion}",
+            "net.serenity-bdd:serenity-junit5:${serenityCoreVersion}",
+            "net.serenity-bdd:serenity-screenplay:${serenityCoreVersion}",
+            "net.serenity-bdd:serenity-screenplay-webdriver:${serenityCoreVersion}",
+            "net.serenity-bdd:serenity-ensure:${serenityCoreVersion}",
+            "net.serenity-bdd:serenity-shutterbug:${serenityCoreVersion}",
+            platform("org.junit:junit-bom:${junitVersion}"),
+            'org.junit.jupiter:junit-jupiter',
+            "org.assertj:assertj-core:${assertJVersion}"
+}
+
+test {
+    useJUnitPlatform()
+    systemProperties System.getProperties()
+    maxParallelForks = 5
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+test.finalizedBy(aggregate)
