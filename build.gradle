@@ -3,6 +3,8 @@ plugins {
     id "net.serenity-bdd.serenity-gradle-plugin" version "3.0.2"
 }
 
+defaultTasks 'delete', 'clean', 'test', 'aggregate'
+
 group = 'org.example'
 version = '1.0-SNAPSHOT'
 
@@ -27,6 +29,12 @@ dependencies {
             platform("org.junit:junit-bom:${junitVersion}"),
             'org.junit.jupiter:junit-jupiter',
             "org.assertj:assertj-core:${assertJVersion}"
+}
+
+tasks.register("delete") {
+    doLast {
+        delete "target"
+    }
 }
 
 test {

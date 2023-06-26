@@ -17,7 +17,7 @@ import org.openqa.selenium.Keys;
 @DisplayName("Searching On Wikipedia and Google")
 @ExtendWith(SerenityJUnit5Extension.class)
 public class searchSteps {
-    @CastMember
+    @CastMember(name = "David")
     Actor searchUser;
 
     @Test
