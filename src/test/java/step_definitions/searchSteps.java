@@ -2,36 +2,43 @@ package step_definitions;
 
 import interactions.AddToCart;
 import interactions.Login;
+import interactions.NavigateFromHomePage;
 import net.serenitybdd.junit5.SerenityJUnit5Extension;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.annotations.CastMember;
 import net.serenitybdd.screenplay.ensure.Ensure;
-import net.serenitybdd.screenplay.ui.PageElement;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import questions.Cart;
 
+import java.util.ArrayList;
+import java.util.List;
 
-@DisplayName("Searching On Wikipedia and Google")
+@DisplayName("Sauce Demo Shop")
 @ExtendWith(SerenityJUnit5Extension.class)
 public class searchSteps {
-    @CastMember(name = "David")
-    Actor searchUser;
-
-    @Test
-    void loginIntoSauceDemo() {
-        searchUser.attemptsTo(
-                Login.as("standard_user", "secret_sauce"),
-                Ensure.that(PageElement.containingText("Products")).isDisplayed()
-        );
-    }
+    @CastMember(name = "Buyer")
+    Actor user;
     @Test
     void addItemToCard() {
-        searchUser.attemptsTo(
+        user.attemptsTo(
                 Login.as("standard_user", "secret_sauce"),
                 AddToCart.item("backpack"),
+                NavigateFromHomePage.toCartPage(),
                 Ensure.that(Cart.numberOfItemsAdded()).isEqualTo(1)
+        );
+    }
+
+    @Test
+    void addSeveralItemsToCard() {
+        user.attemptsTo(
+                Login.as("standard_user", "secret_sauce"),
+                AddToCart.item("backpack"),
+                AddToCart.item("jacket"),
+                AddToCart.item("bolt"),
+                NavigateFromHomePage.toCartPage(),
+                Ensure.that(Cart.numberOfItemsAdded()).isEqualTo(3)
         );
     }
 }
