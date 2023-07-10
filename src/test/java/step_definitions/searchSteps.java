@@ -3,6 +3,7 @@ package step_definitions;
 import interactions.AddToCart;
 import interactions.Login;
 import interactions.NavigateFromHomePage;
+import interactions.Navigates;
 import net.serenitybdd.junit5.SerenityJUnit5Extension;
 import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.annotations.CastMember;
@@ -39,6 +40,21 @@ public class searchSteps {
                 AddToCart.item("bolt"),
                 NavigateFromHomePage.toCartPage(),
                 Ensure.that(Cart.numberOfItemsAdded()).isEqualTo(3)
+        );
+    }
+
+    @Test
+    void addProductFromProductPage() {
+        user.attemptsTo(
+                Login.as("standard_user", "secret_sauce"),
+                NavigateFromHomePage.toProductPage("Backpack"),
+                AddToCart.fromProductPage(),
+                Navigates.backToMainPageFromProductPage(),
+                NavigateFromHomePage.toCartPage(),
+                Ensure.that(Cart.numberOfItemsAdded()).isEqualTo(1)
+
+
+
         );
     }
 }

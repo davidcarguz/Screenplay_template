@@ -16,4 +16,10 @@ public class NavigateFromHomePage {
                 Click.on(CART_ICON)
         );
     }
+
+    public static Performable toProductPage(String product) {
+        return Task.where("{0} navigates to "+ product + "page",
+                Click.on(PageElement.located(
+                        By.xpath("//div[@class='inventory_item_name' and contains(text(), '"+ product +"')]"))));
+    }
 }
